@@ -1,6 +1,6 @@
-package repository;
+package com.example.zenturaserver.repository;
 
-import model.PatientModel;
+import com.example.zenturaserver.model.PatientModel;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 

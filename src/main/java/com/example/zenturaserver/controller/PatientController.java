@@ -1,12 +1,13 @@
-package controller;
+package com.example.zenturaserver.controller;
 
-import model.PatientModel;
+
+import com.example.zenturaserver.model.PatientModel;
+import com.example.zenturaserver.repository.PatientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-import repository.PatientRepository;
 
 import java.util.List;
 

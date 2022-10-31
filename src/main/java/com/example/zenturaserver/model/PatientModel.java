@@ -1,4 +1,4 @@
-package model;
+package com.example.zenturaserver.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
