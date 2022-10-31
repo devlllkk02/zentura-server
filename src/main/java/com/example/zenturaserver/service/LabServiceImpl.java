@@ -1,9 +1,7 @@
 package com.example.zenturaserver.service;
 
 import com.example.zenturaserver.model.LabDTO;
-import com.example.zenturaserver.model.PatientDTO;
 import com.example.zenturaserver.repository.LabRepository;
-import com.example.zenturaserver.repository.PatientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,8 +15,6 @@ public class LabServiceImpl implements LabService {
 
     @Autowired
     private LabRepository labRepo;
-    @Autowired
-    private PatientService patientService;
 
     // -----    GET      -----
     @Override
