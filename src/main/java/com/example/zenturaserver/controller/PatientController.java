@@ -77,6 +77,7 @@ public class PatientController {
             //Mobile
             patientToSave.setMobile(patient.getMobile() != null ? patient.getMobile() : patientToSave.getMobile());
 
+            patientRepo.save(patientToSave);
             return new ResponseEntity<PatientDTO>(patientToSave, HttpStatus.OK);
         } else {
             return new ResponseEntity<>("Patient not found!", HttpStatus.NOT_FOUND);
