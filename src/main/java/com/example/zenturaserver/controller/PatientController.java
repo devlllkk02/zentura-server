@@ -1,12 +1,15 @@
 package com.example.zenturaserver.controller;
 
+import com.example.zenturaserver.exception.PatientCollectionException;
 import com.example.zenturaserver.model.PatientDTO;
 import com.example.zenturaserver.repository.PatientRepository;
+import com.example.zenturaserver.service.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.ConstraintViolationException;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -17,27 +20,23 @@ public class PatientController {
     @Autowired
     private PatientRepository patientRepo;
 
+    @Autowired
+    private PatientService patientService;
+
     // -----    GET      -----
     @GetMapping("/patient/getall")
     public ResponseEntity<?> getAllPatients() {
-        List<PatientDTO> patients = patientRepo.findAll();
-
-        if (patients.size() > 0) {
-            return new ResponseEntity<List<PatientDTO>>(patients, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>("No patients found!", HttpStatus.NOT_FOUND);
-        }
+        List<PatientDTO> patients = patientService.getAllPatients();
+        return new ResponseEntity<>(patients, patients.size() > 0 ? HttpStatus.OK : HttpStatus.NOT_FOUND);
     }
 
     @GetMapping("/patient/get/{id}")
     public ResponseEntity<?> getAPatient(@PathVariable("id") String id) {
 
-        Optional<PatientDTO> patientOptional = patientRepo.findById(id);
-
-        if (patientOptional.isPresent()) {
-            return new ResponseEntity<PatientDTO>(patientOptional.get(), HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>("Patient not found!", HttpStatus.NOT_FOUND);
+        try {
+            return new ResponseEntity<>(patientService.getAPatient(id), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
 
     }
@@ -46,9 +45,7 @@ public class PatientController {
     @PostMapping("/patient/create")
     public ResponseEntity<?> createPatient(@RequestBody PatientDTO patient) {
         try {
-            patient.setCreatedAt(new Date(System.currentTimeMillis()));
-            patient.setUpdatedAt(new Date(System.currentTimeMillis()));
-            patientRepo.save(patient);
+            patientService.createPatient(patient);
             return new ResponseEntity<PatientDTO>(patient, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
@@ -60,27 +57,11 @@ public class PatientController {
     @PutMapping("/patient/update/{id}")
     public ResponseEntity<?> updateAPatient(@PathVariable("id") String id, @RequestBody PatientDTO patient) {
 
-        Optional<PatientDTO> patientOptional = patientRepo.findById(id);
-
-        if (patientOptional.isPresent()) {
-            PatientDTO patientToSave = patientOptional.get();
-            patientToSave.setUpdatedAt(new Date(System.currentTimeMillis()));
-
-            //First Name
-            patientToSave.setFirstName(patient.getFirstName() != null ? patient.getFirstName() : patientToSave.getFirstName());
-            //Last Name
-            patientToSave.setLastName(patient.getLastName() != null ? patient.getLastName() : patientToSave.getLastName());
-            //Date of Birth
-            patientToSave.setDateOfBirth(patient.getDateOfBirth() != null ? patient.getDateOfBirth() : patientToSave.getDateOfBirth());
-            //Address
-            patientToSave.setAddress(patient.getAddress() != null ? patient.getAddress() : patientToSave.getAddress());
-            //Mobile
-            patientToSave.setMobile(patient.getMobile() != null ? patient.getMobile() : patientToSave.getMobile());
-
-            patientRepo.save(patientToSave);
-            return new ResponseEntity<PatientDTO>(patientToSave, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>("Patient not found!", HttpStatus.NOT_FOUND);
+        try {
+            patientService.updatePatient(id, patient);
+            return new ResponseEntity<>("Patient updated succesfully!", HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
 
     }
@@ -89,10 +70,10 @@ public class PatientController {
     @DeleteMapping("/patient/delete/{id}")
     public ResponseEntity<?> deleteAPatient(@PathVariable("id") String id) {
         try {
-           patientRepo.deleteById(id);
-            return new ResponseEntity<>("Patient successfully deleted!", HttpStatus.OK);
+            patientService.deletePatient(id);
+            return new ResponseEntity<>("Patient deleted successfully!", HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
     }
 }
