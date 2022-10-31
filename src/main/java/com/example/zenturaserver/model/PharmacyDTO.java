@@ -23,6 +23,7 @@ public class PharmacyDTO {
     private String id;
 
     private List<PatientDTO> patients;
+    private List<DoctorDTO> doctors;
     private Date date;
     private String medicine;
 }
