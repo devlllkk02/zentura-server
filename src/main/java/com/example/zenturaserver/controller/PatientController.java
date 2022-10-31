@@ -1,6 +1,5 @@
 package com.example.zenturaserver.controller;
 
-import com.example.zenturaserver.exception.PatientCollectionException;
 import com.example.zenturaserver.model.PatientDTO;
 import com.example.zenturaserver.repository.PatientRepository;
 import com.example.zenturaserver.service.PatientService;
@@ -16,9 +15,6 @@ import java.util.Optional;
 
 @RestController
 public class PatientController {
-
-    @Autowired
-    private PatientRepository patientRepo;
 
     @Autowired
     private PatientService patientService;

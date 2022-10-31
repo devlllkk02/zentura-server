@@ -62,6 +62,10 @@ public class PatientServiceImpl implements PatientService {
 
         Optional<PatientDTO> patientOptional = patientRepo.findById(id);
 
+        if (patient.getFirstName().equals("") || patient.getLastName().equals("") || patient.getDateOfBirth() == null || patient.getAddress().equals("") || patient.getMobile().equals("")) {
+            throw new Exception("Please enter all the fields!");
+        }
+
         if (!patientOptional.isPresent()) {
             throw new Exception("Patient not found!");
         } else {
