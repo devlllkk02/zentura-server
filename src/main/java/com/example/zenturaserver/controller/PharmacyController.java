@@ -19,9 +19,9 @@ public class PharmacyController {
 
     // -----    GET      -----
     @GetMapping("/pharmacy/getall")
-    public ResponseEntity<?> getAllPatients() {
+    public ResponseEntity<?> getAllInvoices() {
         List<PharmacyDTO> invoices = pharmacyService.getAllInvoices();
-        return new ResponseEntity<>(invoices, invoices.size() > 0 ? HttpStatus.OK : HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(invoices,  HttpStatus.OK);
     }
 
     @GetMapping("/pharmacy/get/{id}")

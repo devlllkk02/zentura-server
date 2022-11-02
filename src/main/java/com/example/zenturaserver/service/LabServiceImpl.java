@@ -41,7 +41,6 @@ public class LabServiceImpl implements LabService {
     @Override
     public void createLabReport(LabDTO labReport) throws Exception {
         try {
-
             if (labReport.getPatientName().equals("")||  labReport.getDate() == null || labReport.getDescription().equals("") || labReport.getLink().equals("")) {
                 throw new Exception("Please enter all the fields!");
             }

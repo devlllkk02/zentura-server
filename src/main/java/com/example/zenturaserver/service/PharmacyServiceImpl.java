@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class PharmacyImpl implements PharmacyService {
+public class PharmacyServiceImpl implements PharmacyService {
 
     @Autowired
     private PharmacyRepository pharmacyRepo;
@@ -71,12 +71,11 @@ public class PharmacyImpl implements PharmacyService {
             //Patient Name
             invoiceToSave.setPatientName(invoice.getPatientName());
             //Doctor Name
-            invoiceToSave.setPatientName(invoice.getDoctorName());
+            invoiceToSave.setDoctorName(invoice.getDoctorName());
             //Date
             invoiceToSave.setDate(invoice.getDate());
-            //Description
+            //Medicine
             invoiceToSave.setMedicine(invoice.getMedicine());
-            //Link
 
             //Updated At
             invoiceToSave.setUpdatedAt(new Date(System.currentTimeMillis()));

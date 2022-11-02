@@ -23,7 +23,7 @@ public class PatientController {
     @GetMapping("/patient/getall")
     public ResponseEntity<?> getAllPatients() {
         List<PatientDTO> patients = patientService.getAllPatients();
-        return new ResponseEntity<>(patients, patients.size() > 0 ? HttpStatus.OK : HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(patients, HttpStatus.OK);
     }
 
     @GetMapping("/patient/get/{id}")

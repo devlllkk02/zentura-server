@@ -19,7 +19,7 @@ public class DoctorController {
     @GetMapping("/doctor/getall")
     public ResponseEntity<?> getAllDoctors() {
         List<DoctorDTO> doctors = doctorService.getAllDoctors();
-        return new ResponseEntity<>(doctors, doctors.size() > 0 ? HttpStatus.OK : HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(doctors, HttpStatus.OK );
     }
 
     @GetMapping("/doctor/get/{id}")

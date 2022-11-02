@@ -19,7 +19,7 @@ public class LabController {
     @GetMapping("/lab/getall")
     public ResponseEntity<?> getAllPatients() {
         List<LabDTO> labReports = labService.getAllLabReports();
-        return new ResponseEntity<>(labReports, labReports.size() > 0 ? HttpStatus.OK : HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(labReports, HttpStatus.OK);
     }
 
     @GetMapping("/lab/get/{id}")
